@@ -1,0 +1,63 @@
+//
+//  WelcomeView.swift
+//  IncomeUltra
+//
+//  Created by Arundas M K on 27/09/25.
+//
+
+import SwiftUI
+
+struct WelcomeView: View {
+  @StateObject private var viewModel = WelcomeViewModel()
+  @Binding var shouldShowWelcomeView: Bool
+  
+  var body: some View {
+    VStack {
+      title
+      Spacer()
+      VStack(spacing: 0) {
+        welcomeImage
+        welcomeText
+      }
+      Spacer()
+      getStartedButton
+    }
+    .padding()
+    .background(Color.appTheme.viewBackground)
+  }
+}
+
+private extension WelcomeView {
+  var title: some View {
+    Text(viewModel.getAppName())
+      .font(.title)
+      .fontWeight(.bold)
+  }
+  
+  var welcomeImage: some View {
+    Image(.welcome)
+      .resizable()
+      .scaledToFit()
+      .frame(maxWidth: .infinity)
+  }
+  
+  var welcomeText: some View {
+    Text("Effortlessly calculate your income.\n Let's get started!")
+      .font(.title3)
+      .fontWeight(.medium)
+      .multilineTextAlignment(.center)
+      .foregroundColor(Color.appTheme.secondaryText)
+  }
+  
+  var getStartedButton: some View {
+    Text("Get Started")
+      .primaryButton()
+      .button(.press) {
+        shouldShowWelcomeView = false
+      }
+  }
+}
+
+#Preview {
+  WelcomeView(shouldShowWelcomeView: .constant(true))
+}
